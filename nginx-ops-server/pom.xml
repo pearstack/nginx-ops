@@ -26,7 +26,7 @@
         </dependency>
         <!--引入jetty的依赖-->
         <dependency>
-            <artifactId>spring-boot-starter-jetty</artifactId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
             <groupId>org.springframework.boot</groupId>
         </dependency>
         <!-- 分布式配置文件-->

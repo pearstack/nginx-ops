@@ -1,16 +1,16 @@
 package io.github.pearstack.nginx.ops.module.system.pojo.vo;
 
-import cn.hutool.system.HostInfo;
-import cn.hutool.system.JavaRuntimeInfo;
-import cn.hutool.system.RuntimeInfo;
-import cn.hutool.system.SystemUtil;
+import cn.hutool.core.util.NumberUtil;
+import cn.hutool.system.*;
 import cn.hutool.system.oshi.CpuInfo;
 import cn.hutool.system.oshi.OshiUtil;
+import io.github.pearstack.nginx.ops.util.ip.IpUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import oshi.hardware.GlobalMemory;
 
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import java.util.List;
  * @author lihao3
  * @since 2022/4/25
  */
+@Slf4j
 @Getter
 @Builder
 @ToString
@@ -29,19 +30,15 @@ public class Server {
   /** CPU相关信息 */
   @ApiModelProperty("CPU相关信息")
   private Cpu cpu;
-
   /** 內存相关信息 */
   @ApiModelProperty("內存相关信息")
   private Mem mem;
-
   /** JVM相关信息 */
   @ApiModelProperty("JVM相关信息")
   private Jvm jvm;
-
   /** 服务器相关信息 */
   @ApiModelProperty("服务器相关信息")
   private Sys sys;
-
   /** 磁盘相关信息 */
   @ApiModelProperty("磁盘相关信息")
   private List<SysFile> sysFiles;
@@ -56,7 +53,10 @@ public class Server {
     JavaRuntimeInfo javaRuntimeInfo = SystemUtil.getJavaRuntimeInfo();
     // 获取网卡信息
     HostInfo hostInfo = SystemUtil.getHostInfo();
-
+    // 查询系统信息
+    OsInfo osInfo = SystemUtil.getOsInfo();
+    // 查询系统信息
+    UserInfo userInfo = SystemUtil.getUserInfo();
     List<SysFile> sysFiles = new ArrayList<>();
     OshiUtil.getOs()
         .getFileSystem()
@@ -68,9 +68,9 @@ public class Server {
                         .dirName(item.getMount())
                         .typeName(item.getType())
                         .total(item.getTotalSpace())
-                        .free(item.getFreeSpace())
                         .used(item.getUsableSpace())
-                        .usage(item.getUsableSpace() / item.getTotalSpace())
+                        .free(item.getTotalSpace() - item.getUsableSpace())
+                        .usage(NumberUtil.sub(item.getUsableSpace(), item.getTotalSpace()))
                         .build()));
     return Server.builder()
         .cpu(
@@ -98,11 +98,11 @@ public class Server {
                 .build())
         .sys(
             Sys.builder()
-                .computerName(hostInfo.getName())
-                .computerIp(hostInfo.getAddress())
-                .osName(SystemUtil.OS_NAME)
-                .osArch(SystemUtil.OS_ARCH)
-                .userDir(SystemUtil.USER_DIR)
+                .computerName(IpUtils.getHostName())
+                .computerIp(IpUtils.getHostIp())
+                .osName(osInfo.getName())
+                .osArch(osInfo.getArch())
+                .userDir(userInfo.getCurrentDir())
                 .build())
         .sysFiles(sysFiles)
         .build();

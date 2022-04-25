@@ -31,7 +31,7 @@ public class Knife4jConfiguration {
                     .build())
             .select()
             // 这里指定Controller扫描包路径
-            .apis(RequestHandlerSelectors.basePackage("io.github.pearstack.nginx.ops.module.*.controller"))
+            .apis(RequestHandlerSelectors.basePackage("io.github.pearstack.nginx.ops.module"))
             .paths(PathSelectors.any())
             .build();
     return docket;
