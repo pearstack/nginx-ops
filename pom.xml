@@ -35,6 +35,8 @@
         <sa-token.version>1.29.0</sa-token.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <knife4j.version>2.0.9</knife4j.version>
+        <nginxparser.version>0.9.6</nginxparser.version>
+        <oshi-core.version>5.6.1</oshi-core.version>
     </properties>
 
     <dependencyManagement>
@@ -85,12 +87,6 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
-            <!--http 请求-->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-http</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
             <!-- Sa-Token 权限认证 -->
             <dependency>
                 <groupId>cn.dev33</groupId>
@@ -115,6 +111,18 @@
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
+            <!--nginx conf解析-->
+            <dependency>
+                <groupId>com.github.odiszapc</groupId>
+                <artifactId>nginxparser</artifactId>
+                <version>${nginxparser.version}</version>
+            </dependency>
+            <!-- 获取JNA的操作系统和硬件信息库-->
+            <dependency>
+                <groupId>com.github.oshi</groupId>
+                <artifactId>oshi-core</artifactId>
+                <version>${oshi-core.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -127,7 +135,7 @@
         <!--hutool 工具包-->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
+            <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
         </dependency>
         <!--guava 工具包-->
