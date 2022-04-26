@@ -29,6 +29,7 @@ jobs:
         host: ${{ secrets.HOST }}
         user: ${{ secrets.USERNAME }}
         pass: ${{ secrets.PASSWORD }}
+        key: ${{ secrets.KEY }}
         connect_timeout: 360s
         scp: |-
             './nginx-ops-server/target/*.jar' => /www/server/nginx-ops/
