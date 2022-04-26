@@ -1,0 +1,29 @@
+name: Build app and deploy to Tencent
+on:
+  #监听push操作
+  push:
+    branches:
+      # mian分支，你也可以改成其他分支
+      - develop
+jobs:
+    # 打包及发布
+  build-and-deploy:
+    # 运行环境
+    runs-on: ubuntu-latest
+    steps: # 步骤
+    # 下载源码
+    - name: Checkout
+      uses: actions/checkout@master
+    # 打包构建
+    - name: Setup Maven
+      uses: stCarolas/setup-maven@v4.3
+    - run: mvn clean package
+    # 部署到服务器
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }} # 连接服务器参数
+        username: ${{ secrets.USERNAME }} # 连接服务器参数
+        password: ${{ secrets.PASSWORD }} # 连接服务器参数
+        script: | # 连接服务器后执行的命令
+          scp ./nginx-ops-server/target/*.jar ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/www/server/nginx-ops
