@@ -1,18 +1,26 @@
 package io.github.pearstack.nginx.ops.module.system.pojo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @TableName sys_logging
+ * 用户日志记录表
+ *
+ * @author lihao3
+ * @tableName sys_logging
  */
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName(value = "sys_logging")
-@Data
 public class SysLoggingDO implements Serializable {
 
   /** 相应消息体 */
@@ -46,7 +54,7 @@ public class SysLoggingDO implements Serializable {
   private String responseBody;
 
   /** 是否成功 */
-  private String success;
+  private Boolean success;
 
   /** 异常信息 */
   private String errorMsg;
@@ -57,9 +65,6 @@ public class SysLoggingDO implements Serializable {
   /** 描述 */
   private String description;
 
-  /** 请求消息体 */
-  private String requestBody;
-
   /** 使用浏览器 */
   private String browser;
 
@@ -69,6 +74,5 @@ public class SysLoggingDO implements Serializable {
   /** 日志类型，登录日志，操作日志 */
   private String loggingType;
 
-  @TableField(exist = false)
   private static final long serialVersionUID = 1L;
 }
