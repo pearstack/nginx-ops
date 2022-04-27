@@ -18,10 +18,10 @@ pipeline {
             }
             steps {
                 withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
-                        sh "mvnd clean package -U -DskipTests"
-                        sh "cp $SOURCE_PATH/*.jar $TARGET_PATH"
-                        sh "cp ./$SHELL_NAME $TARGET_PATH"
-                        sh "sh $TARGET_PATH/$SHELL_NAME restart"
+                    sh "mvnd clean package -U -DskipTests"
+                    sh "cp $SOURCE_PATH/*.jar $TARGET_PATH"
+                    sh "cp ./$SHELL_NAME $TARGET_PATH"
+                    sh "sh $TARGET_PATH/$SHELL_NAME restart"
                 }
             }
         }
