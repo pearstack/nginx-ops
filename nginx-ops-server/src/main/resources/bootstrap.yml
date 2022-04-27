@@ -29,7 +29,7 @@ spring:
     # 数据库配置(根据情况修改)
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.99.10.123:3306/wison-wpos?useUnicode=true&characterEncoding=utf8&useSSL=false&noAccessToProcedureBodies=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://sh-cynosdbmysql-grp-nd1blxru.sql.tencentcdb.com:29792/wison-wpos?useUnicode=true&characterEncoding=utf8&useSSL=false&noAccessToProcedureBodies=true&serverTimezone=Asia/Shanghai
     username: iipuser
     password: wison12#$
   redis:
